@@ -7,7 +7,7 @@ export class HttpClient {
     private baseUrl: string;
 
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl;
+        this.baseUrl = baseUrl.replace(/\/+$/, '');
     }
 
     /**
@@ -16,7 +16,12 @@ export class HttpClient {
      * @param body The JSON payload.
      */
     async streamRequest(path: string, body: any): Promise<AsyncGenerator<string>> {
-        const url = `${this.baseUrl}/${path}`;
+        let normalizedPath = path.replace(/^\/+/, '');
+        if (this.baseUrl.endsWith('/v1') && normalizedPath.startsWith('v1/')) {
+            normalizedPath = normalizedPath.slice('v1/'.length);
+        }
+
+        const url = `${this.baseUrl}/${normalizedPath}`;
 
         // In a real scenario, use a robust fetch/axios implementation here
         const response = await fetch(url, {

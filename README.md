@@ -34,10 +34,12 @@ Create a `.env` file in the root directory and add your configuration:
 ```env
 LM_API_KEY=your_api_key_here
 LM_BASE_URL=http://localhost:1234/v1
+LM_MODEL=your-model-id
 ```
 
 - `LM_API_KEY`: Your API key for the language model provider.
 - `LM_BASE_URL`: The base URL for the model API (defaults to `http://localhost:1234/v1` if not set).
+- `LM_MODEL`: The model id to request, as reported by `GET /v1/models` on your local server (optional; falls back to a hardcoded default if not set).
 
 ## Usage
 
